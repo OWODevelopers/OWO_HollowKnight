@@ -10,6 +10,8 @@ namespace OWO_HollowKnight
     public class OWO_HollowKnight : Mod
     {
         internal static OWO_HollowKnight Instance;
+        public override string GetVersion() => "v0.0.1";
+        public OWOSkin owoSkin;
 
         //public override List<ValueTuple<string, string>> GetPreloadNames()
         //{
@@ -27,10 +29,11 @@ namespace OWO_HollowKnight
         public override void Initialize(Dictionary<string, Dictionary<string, GameObject>> preloadedObjects)
         {
             Log("Initializing");
+            owoSkin = new OWOSkin();
 
             Instance = this;
 
-            Log("Initialized");
+            owoSkin.LOG("OwoSkin Initialized");
         }
     }
 }
