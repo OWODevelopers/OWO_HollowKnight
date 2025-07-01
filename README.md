@@ -1,2 +1,3 @@
 # OWO_HollowKnight
-Hollow Knight OWO integration
+
+A mod for the game Hollow Knight.

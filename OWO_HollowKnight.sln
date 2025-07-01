@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35327.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OWO_HollowKnight", "OWO_HollowKnight.csproj", "{CE1D53F9-3E29-4637-A6BF-57BDE5785A59}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CE1D53F9-3E29-4637-A6BF-57BDE5785A59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE1D53F9-3E29-4637-A6BF-57BDE5785A59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE1D53F9-3E29-4637-A6BF-57BDE5785A59}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE1D53F9-3E29-4637-A6BF-57BDE5785A59}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {630FE6F6-A87B-4CF4-95E5-D61EA8512AC7}
+	EndGlobalSection
+EndGlobal
