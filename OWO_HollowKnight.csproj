@@ -10,7 +10,7 @@
   <PropertyGroup>
     <RootNamespace>OWO_HollowKnight</RootNamespace>
     <AssemblyName>OWO_HollowKnight</AssemblyName>
-    <TargetFramework>net472</TargetFramework>
+    <TargetFramework>net48</TargetFramework>
     <AssemblyTitle>OWO_HollowKnight</AssemblyTitle>
     <Product>OWO_HollowKnight</Product>
     <Description>A Hollow Knight Mod</Description>
@@ -328,5 +328,6 @@
     <PackageReference Include="MonoMod.RuntimeDetour" Version="25.2.3" />
     <PackageReference Include="MonoMod.Utils" Version="25.0.8" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="OWO" Version="2.4.2" />
   </ItemGroup>
 </Project>
