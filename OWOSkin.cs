@@ -12,6 +12,7 @@ namespace OWO_HollowKnight
 {
     public class OWOSkin : Loggable
     {
+        private string owoPath = "\\hollow_knight_Data\\Managed\\Mods\\OWO_HollowKnight\\OWO";
         public bool suitEnabled = false;
         public bool isPlayerActive = false;
         private bool ultraSpeedIsEnable = false;
@@ -32,6 +33,7 @@ namespace OWO_HollowKnight
 
         public OWOSkin()
         {
+            LOG("WEA");
             RegisterAllSensationsFiles();
             InitializeOWO();
         }
@@ -40,7 +42,8 @@ namespace OWO_HollowKnight
 
         private void RegisterAllSensationsFiles()
         {
-            string configPath = Directory.GetCurrentDirectory() + "\\OWO";
+            LOG("#### SENSATIONS PATH" + Directory.GetCurrentDirectory() + owoPath);
+            string configPath = Directory.GetCurrentDirectory() + owoPath;
             DirectoryInfo d = new DirectoryInfo(configPath);
             FileInfo[] Files = d.GetFiles("*.owo", SearchOption.AllDirectories);
             for (int i = 0; i < Files.Length; i++)
@@ -56,7 +59,10 @@ namespace OWO_HollowKnight
                     Sensation test = Sensation.Parse(tactFileStr);
                     FeedbackMap.Add(prefix, test);
                 }
-                catch (Exception e) { LOG(e.Message); }
+                catch (Exception e)
+                { 
+                    LOG(e.Message);
+                }
 
             }
         }
@@ -64,8 +70,9 @@ namespace OWO_HollowKnight
         private async void InitializeOWO()
         {
             LOG("Initializing OWO skin");
-
+            
             var gameAuth = GameAuth.Create(AllBakedSensations()).WithId("90027016");
+            LOG("Auth generated");
 
             OWO.Configure(gameAuth);
             string[] myIPs = GetIPsFromFile("OWO_Manual_IP.txt");
@@ -81,7 +88,8 @@ namespace OWO_HollowKnight
                 LOG("OWO suit connected.");
                 Feel("Loading Up", 1);
             }
-            if (!suitEnabled) LOG("OWO is not enabled?!?!");
+            if (!suitEnabled)
+                LOG("OWO is not enabled?!?!");
         }
 
         public BakedSensation[] AllBakedSensations()
@@ -107,7 +115,7 @@ namespace OWO_HollowKnight
         public string[] GetIPsFromFile(string filename)
         {
             List<string> ips = new List<string>();
-            string filePath = Directory.GetCurrentDirectory() + "\\BepinEx\\Plugins\\OWO" + filename;
+            string filePath = Directory.GetCurrentDirectory() + owoPath + filename;
             if (File.Exists(filePath))
             {
                 LOG("Manual IP file found: " + filePath);
@@ -122,21 +130,19 @@ namespace OWO_HollowKnight
         }
 
         ~OWOSkin()
-        {
-            LOG("Destructor called");
+        {          
             DisconnectOWO();
         }
 
         public void DisconnectOWO()
         {
-            LOG("Disconnecting OWO skin.");
             OWO.Disconnect();
         }
         #endregion
 
         public void LOG(String msg)
         {
-            Log(msg);
+            OWO_HollowKnight.Instance.Log($"{msg}");
         }
 
         #region Feel
@@ -179,7 +185,7 @@ namespace OWO_HollowKnight
 
             Sensation toSend = GetBackedId("Ultra Speed");
             if (toSend == null) return;
-            //LOG($"### SpeedAngle: {ultraAngle}");
+            LOG($"### SpeedAngle: {ultraAngle}");
 
             Muscle[] musclesList = GetMuscleAngle(ultraAngle, reverseDash);
 
