@@ -1,6 +1,7 @@
 ﻿using GlobalEnums;
 using Modding;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UObject = UnityEngine.Object;
@@ -14,9 +15,7 @@ namespace OWO_HollowKnight
         public OWOSkin owoSkin;
         internal static OWO_HollowKnight Instance;
 
-        //--
-        string playerMove = "";
-        //--
+        public bool isGamePaused = false;
         
         public bool IsSet()
         {
@@ -35,8 +34,11 @@ namespace OWO_HollowKnight
             //Patch methods            
             On.HeroAudioController.PlaySound += OnHeroSounds;
             On.HeroController.DoDoubleJump += OnDoubleJump;
+            On.GameManager.EquipCharm += OnEquipCharm;
+            On.GameManager.PauseGameToggle += OnGamePause;
             ModHooks.AttackHook += OnAttack;            
         }
+        
 
         private void PreFeel(string sensationName)
         {
@@ -87,6 +89,25 @@ namespace OWO_HollowKnight
                     PreFeel("Take Hit");
                     break;
             }
+        }
+
+        #endregion
+
+        #region Game
+
+        private IEnumerator OnGamePause(On.GameManager.orig_PauseGameToggle orig, GameManager self)
+        {
+            isGamePaused = !isGamePaused;
+
+            Log("GameIsPaused: " + isGamePaused);
+
+            return orig(self);
+        }
+
+        private void OnEquipCharm(On.GameManager.orig_EquipCharm orig, GameManager self, int charmNum)
+        {
+            orig(self, charmNum);
+            PreFeel("Equip Charm");
         }
 
         #endregion
