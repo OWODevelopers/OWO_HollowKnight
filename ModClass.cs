@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static CutsceneHelper;
 using UObject = UnityEngine.Object;
 
 namespace OWO_HollowKnight
@@ -16,6 +17,7 @@ namespace OWO_HollowKnight
         internal static OWO_HollowKnight Instance;
 
         public bool isGamePaused = false;
+
         
         public bool IsSet()
         {
@@ -34,11 +36,55 @@ namespace OWO_HollowKnight
             //Patch methods            
             On.HeroAudioController.PlaySound += OnHeroSounds;
             On.HeroController.DoDoubleJump += OnDoubleJump;
+            On.HeroController.StartMPDrain += OnStartMPDrain;
+            On.HeroController.StopMPDrain += OnStopMPDrain;
+            On.HeroController.Update += OnHeroUpdate;
             On.GameManager.EquipCharm += OnEquipCharm;
             On.GameManager.PauseGameToggle += OnGamePause;
-            ModHooks.AttackHook += OnAttack;            
+            On.GameManager.OnApplicationQuit += OnApplicationQuit;
+            On.GameManager.PlayerDead += OnPlayerDeath;
+            On.GameManager.PlayerDeadFromHazard += OnPlayerDeathFromHazard;
+            On.GameManager.FadeSceneIn += OnEnterHero; //FinishedEnteringScene por si este no sirve
+            On.PlayerData.AddHealth += OnHeal;
+            ModHooks.AttackHook += OnAttack;      
         }
-        
+
+        private void OnHeroUpdate(On.HeroController.orig_Update orig, HeroController self)
+        {
+            orig(self);
+
+            if (self.cState.onGround) 
+            {                
+                //owoSkin.StopFallingLoop();
+            }
+
+            if (!self.cState.wallSliding)
+            {                
+                //owoSkin.StopWallSlideLoop();
+            }
+        }
+
+        private void OnStopMPDrain(On.HeroController.orig_StopMPDrain orig, HeroController self)
+        {
+            Log("Stop MP Drain");
+        }
+
+        private void OnStartMPDrain(On.HeroController.orig_StartMPDrain orig, HeroController self, float time)
+        {
+            Log("Start MP Drain");
+        }
+
+        private void OnHeal(On.PlayerData.orig_AddHealth orig, PlayerData self, int amount)
+        {
+            PreFeel("Heal");
+            orig(self, amount);
+        }
+
+        private void OnEnterHero(On.GameManager.orig_FadeSceneIn orig, GameManager self)
+        {
+            Log("OnEnterHero");
+            orig(self);
+        }
 
         private void PreFeel(string sensationName)
         {
@@ -91,6 +137,22 @@ namespace OWO_HollowKnight
             }
         }
 
+        private IEnumerator OnPlayerDeath(On.GameManager.orig_PlayerDead orig, GameManager self, float waitTime)
+        {
+            owoSkin.StopAllHapticFeedback();
+            PreFeel("Death");
+
+            yield return orig(self, waitTime);
+        }
+
+        private IEnumerator OnPlayerDeathFromHazard(On.GameManager.orig_PlayerDeadFromHazard orig, GameManager self, float waitTime)
+        {
+            owoSkin.StopAllHapticFeedback();
+            PreFeel("Death");
+
+            yield return orig(self, waitTime);
+        }
+
         #endregion
 
         #region Game
@@ -101,13 +163,19 @@ namespace OWO_HollowKnight
 
             Log("GameIsPaused: " + isGamePaused);
 
-            return orig(self);
+            yield return orig(self);
         }
 
         private void OnEquipCharm(On.GameManager.orig_EquipCharm orig, GameManager self, int charmNum)
         {
             orig(self, charmNum);
             PreFeel("Equip Charm");
+        }
+
+        private void OnApplicationQuit(On.GameManager.orig_OnApplicationQuit orig, GameManager self)
+        {
+            owoSkin.StopAllHapticFeedback();
+            orig(self);
         }
 
         #endregion

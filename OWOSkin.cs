@@ -354,5 +354,10 @@ namespace OWO_HollowKnight
         {
             return suitEnabled && isPlayerActive;
         }
+
+        internal void StopNotGroundLoops()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
