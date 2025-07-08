@@ -74,7 +74,7 @@ namespace OWO_HollowKnight
 
         private void OnHeal(On.PlayerData.orig_AddHealth orig, PlayerData self, int amount)
         {
-            PreFeel("Heal");
+            owoSkin.Feel("Heal",1);
             orig(self, amount);
         }
 
@@ -84,22 +84,17 @@ namespace OWO_HollowKnight
             orig(self);
         }
 
-        private void PreFeel(string sensationName)
-        {
-            Log("Feel:" + sensationName);
-            owoSkin.Feel(sensationName);
-        }
-
         #region Hero
         private void OnAttack(AttackDirection direction)
         {
             Log($"Attack {direction.ToString()}");
+            owoSkin.Feel("Attack", 2);
         }
 
         private void OnDoubleJump(On.HeroController.orig_DoDoubleJump orig, HeroController self)
         {
             orig(self);
-            PreFeel("Double Jump");
+            owoSkin.Feel("Double Jump", 2);
         }
 
         private void OnHeroSounds(On.HeroAudioController.orig_PlaySound orig, HeroAudioController self, HeroSounds soundEffect)
@@ -109,36 +104,39 @@ namespace OWO_HollowKnight
             switch (soundEffect)
             {
                 case HeroSounds.JUMP:
-                    PreFeel("Jump");
+                    owoSkin.Feel("Jump", 2);
                     break;
                 case HeroSounds.DASH:
-                    PreFeel("Dash");
-                    break;
-                case HeroSounds.SOFT_LANDING:
-                    PreFeel("Soft Landing");
+                    owoSkin.Feel("Dash", 2);
                     break;
                 case HeroSounds.HARD_LANDING:
-                    PreFeel("Hard Landing");
+                    owoSkin.Feel("Hard Landing", 2);
                     break;
                 case HeroSounds.FALLING:
-                    PreFeel("Falling");
+                     //Start Loop
                     break;
                 case HeroSounds.WALLJUMP:
-                    PreFeel("Wall Jump");
+                    WallJump();
                     break;
                 case HeroSounds.WALLSLIDE:
-                    PreFeel("Wall Slide");
+                    //Start loop
                     break;
                 case HeroSounds.TAKE_HIT:
-                    PreFeel("Take Hit");
+                    owoSkin.Feel("Hurt", 3);
                     break;
             }
+        }
+
+        private void WallJump()
+        {
+            owoSkin.Feel("Wall Jump", 2);
+            //Stop Loop
         }
 
         private IEnumerator OnPlayerDeath(On.GameManager.orig_PlayerDead orig, GameManager self, float waitTime)
         {
             owoSkin.StopAllHapticFeedback();
-            PreFeel("Death");
+            owoSkin.Feel("Death", 4);
 
             yield return orig(self, waitTime);
         }
@@ -146,7 +144,7 @@ namespace OWO_HollowKnight
         private IEnumerator OnPlayerDeathFromHazard(On.GameManager.orig_PlayerDeadFromHazard orig, GameManager self, float waitTime)
         {
             owoSkin.StopAllHapticFeedback();
-            PreFeel("Death");
+            owoSkin.Feel("Hazard Death", 4);
 
             yield return orig(self, waitTime);
         }
@@ -166,7 +164,7 @@ namespace OWO_HollowKnight
         private void OnEquipCharm(On.GameManager.orig_EquipCharm orig, GameManager self, int charmNum)
         {
             orig(self, charmNum);
-            PreFeel("Equip Charm");
+            owoSkin.Feel("Charm Equip");
         }
 
         private void OnApplicationQuit(On.GameManager.orig_OnApplicationQuit orig, GameManager self)

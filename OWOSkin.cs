@@ -11,7 +11,7 @@ namespace OWO_HollowKnight
     {
         private string owoPath = "\\hollow_knight_Data\\Managed\\Mods\\OWO_HollowKnight\\OWO";
         public bool suitEnabled = false;
-        public bool isGameUnpaused = false;
+        public bool isGameUnpaused = true;
 
         public Dictionary<String, Sensation> FeedbackMap = new Dictionary<String, Sensation>();
 
