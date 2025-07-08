@@ -14,9 +14,7 @@ namespace OWO_HollowKnight
         new public string GetName() => "OWO_HollowKnight";
         public override string GetVersion() => "v0.0.1";
         public OWOSkin owoSkin;
-        internal static OWO_HollowKnight Instance;
-
-        public bool isGamePaused = false;
+        internal static OWO_HollowKnight Instance;        
 
         
         public bool IsSet()
@@ -159,9 +157,8 @@ namespace OWO_HollowKnight
 
         private IEnumerator OnGamePause(On.GameManager.orig_PauseGameToggle orig, GameManager self)
         {
-            isGamePaused = !isGamePaused;
-
-            Log("GameIsPaused: " + isGamePaused);
+            owoSkin.isGameUnpaused = !owoSkin.isGameUnpaused;
+            Log("GameIsPaused: " + !owoSkin.isGameUnpaused);
 
             yield return orig(self);
         }

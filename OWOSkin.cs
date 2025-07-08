@@ -3,10 +3,7 @@ using OWOGame;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
-using UnityEngine;
 
 namespace OWO_HollowKnight
 {
@@ -14,7 +11,7 @@ namespace OWO_HollowKnight
     {
         private string owoPath = "\\hollow_knight_Data\\Managed\\Mods\\OWO_HollowKnight\\OWO";
         public bool suitEnabled = false;
-        public bool isPlayerActive = false;
+        public bool isGameUnpaused = false;
 
         public Dictionary<String, Sensation> FeedbackMap = new Dictionary<String, Sensation>();
 
@@ -135,7 +132,7 @@ namespace OWO_HollowKnight
         public void Feel(String key, int Priority = 0, int intensity = 0)
         {
             Sensation toSend = GetBackedId(key);
-            if (toSend == null) return;
+            if (toSend == null || !CanFeel()) return;
 
             if (intensity != 0)
             {
@@ -167,7 +164,7 @@ namespace OWO_HollowKnight
 
         public bool CanFeel()
         {
-            return suitEnabled && isPlayerActive;
+            return suitEnabled && isGameUnpaused;
         }
     }
 }
