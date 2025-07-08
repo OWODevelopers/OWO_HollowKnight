@@ -24,12 +24,8 @@ namespace OWO_HollowKnight
 
         public override void Initialize(Dictionary<string, Dictionary<string, GameObject>> preloadedObjects)
         {
-            Log("Initializing");
-
             Instance = this;
             owoSkin = new OWOSkin();
-            
-            Log("Initialized");
 
             //Patch methods            
             On.HeroAudioController.PlaySound += OnHeroSounds;
