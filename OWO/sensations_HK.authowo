@@ -1,0 +1,15 @@
+0~Heal~100,1,90,0,0,0,|0%100~weapon-0~#
+1~Falling~100,1,90,0,0,0,|0%100~weapon-0~#
+2~Charm Equip~100,1,90,0,0,0,|0%100~weapon-0~#
+3~Death~100,1,90,0,0,0,|0%100~weapon-0~#
+4~Hurt~100,1,90,0,0,0,|0%100~weapon-0~#
+5~Hazard Death~100,1,90,0,0,0,|0%100~weapon-0~#
+6~Jump~100,1,90,0,0,0,|0%100~weapon-0~Movement#
+7~Double Jump~100,1,90,0,0,0,|0%100~weapon-0~Movement#
+8~Dash~100,1,90,0,0,0,|0%100~weapon-0~Movement#
+9~Wall Slide~100,1,90,0,0,0,|0%100~weapon-0~Movement#
+10~Landing~100,1,90,0,0,0,|0%100~weapon-0~Movement#
+11~Hard Landing~100,1,90,0,0,0,|0%100~weapon-0~Movement#
+12~Attack~100,1,90,0,0,0,|0%100~weapon-0~#
+13~Charging~100,1,90,0,0,0,|0%100~weapon-0~#
+14~Charge Stop~100,1,90,0,0,0,|0%100~weapon-0~
