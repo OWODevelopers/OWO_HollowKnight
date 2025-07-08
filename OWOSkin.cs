@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Threading.Tasks;
 
 namespace OWO_HollowKnight
 {
@@ -14,6 +15,8 @@ namespace OWO_HollowKnight
         public bool isGameUnpaused = true;
 
         public Dictionary<String, Sensation> FeedbackMap = new Dictionary<String, Sensation>();
+        private bool fallingIsActive;
+        private bool wallSlidingIsActive;
 
         public OWOSkin()
         {
@@ -156,6 +159,62 @@ namespace OWO_HollowKnight
         }
 
         #endregion
+
+        #region Loops
+
+        #region Falling
+
+        public void StartFalling()
+        {
+            if (fallingIsActive) return;
+
+            fallingIsActive = true;
+            FallingFuncAsync();
+        }
+
+        public void StopFalling()
+        {
+            fallingIsActive = false;
+        }
+
+        public async Task FallingFuncAsync()
+        {
+            while (fallingIsActive)
+            {
+                Feel("Falling", 0);
+                await Task.Delay(200);
+            }
+        }
+
+        #endregion Falling
+
+        #region Sliding
+
+        public void StarSliding()
+        {
+            if (wallSlidingIsActive) return;
+
+            wallSlidingIsActive = true;
+            SlidingFuncAsync();
+        }
+
+        public void StopSliding()
+        {
+            wallSlidingIsActive = false;
+        }
+
+        public async Task SlidingFuncAsync()
+        {
+            while (wallSlidingIsActive)
+            {
+                Feel("Wall Slide", 0);
+                await Task.Delay(200);
+            }
+        }
+
+        #endregion Falling
+
+        #endregion Loops
 
         public void StopAllHapticFeedback()
         {

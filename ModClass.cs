@@ -53,12 +53,12 @@ namespace OWO_HollowKnight
 
             if (self.cState.onGround) 
             {                
-                //owoSkin.StopFallingLoop();
+               owoSkin.StopFalling();
             }
 
             if (!self.cState.wallSliding)
             {                
-                //owoSkin.StopWallSlideLoop();
+                owoSkin.StopSliding();
             }
         }
 
@@ -113,13 +113,13 @@ namespace OWO_HollowKnight
                     owoSkin.Feel("Hard Landing", 2);
                     break;
                 case HeroSounds.FALLING:
-                     //Start Loop
+                    owoSkin.StartFalling();
                     break;
                 case HeroSounds.WALLJUMP:
                     WallJump();
                     break;
                 case HeroSounds.WALLSLIDE:
-                    //Start loop
+                    owoSkin.StarSliding();
                     break;
                 case HeroSounds.TAKE_HIT:
                     owoSkin.Feel("Hurt", 3);
