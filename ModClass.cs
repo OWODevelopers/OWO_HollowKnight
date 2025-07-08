@@ -39,8 +39,14 @@ namespace OWO_HollowKnight
             On.GameManager.PlayerDead += OnPlayerDeath;
             On.GameManager.PlayerDeadFromHazard += OnPlayerDeathFromHazard;
             On.GameManager.FadeSceneIn += OnEnterHero; //FinishedEnteringScene por si este no sirve
-            On.PlayerData.AddHealth += OnHeal;
+            On.PlayerData.AddHealth += OnHealth;
             ModHooks.AttackHook += OnAttack;      
+        }
+
+        private void OnHealth(On.PlayerData.orig_AddHealth orig, PlayerData self, int amount)
+        {
+            Log("Heal sensation!");
+            orig(self, amount);
         }
 
         private void OnHeroUpdate(On.HeroController.orig_Update orig, HeroController self)
@@ -61,22 +67,19 @@ namespace OWO_HollowKnight
         private void OnStopMPDrain(On.HeroController.orig_StopMPDrain orig, HeroController self)
         {
             Log("Stop MP Drain");
+            orig(self);
         }
 
         private void OnStartMPDrain(On.HeroController.orig_StartMPDrain orig, HeroController self, float time)
         {
             Log("Start MP Drain");
-        }
-
-        private void OnHeal(On.PlayerData.orig_AddHealth orig, PlayerData self, int amount)
-        {
-            owoSkin.Feel("Heal",1);
-            orig(self, amount);
+            orig(self, time);
         }
 
         private void OnEnterHero(On.GameManager.orig_FadeSceneIn orig, GameManager self)
         {
             Log("OnEnterHero");
+            owoSkin.StopAllHapticFeedback();
             orig(self);
         }
 
