@@ -110,7 +110,7 @@ namespace OWO_HollowKnight
                     owoSkin.Feel("Dash", 2);
                     break;
                 case HeroSounds.HARD_LANDING:
-                    owoSkin.Feel("Hard Landing", 2);
+                    HardLanding();
                     break;
                 case HeroSounds.FALLING:
                     owoSkin.StartFalling();
@@ -127,9 +127,15 @@ namespace OWO_HollowKnight
             }
         }
 
+        private void HardLanding()
+        {
+            owoSkin.StopFalling();
+            owoSkin.Feel("Hard Landing", 2);
+        }
+
         private void WallJump()
         {
-            owoSkin.Feel("Wall Jump", 2);
+            owoSkin.Feel("Jump", 2);
             //Stop Loop
         }
 
