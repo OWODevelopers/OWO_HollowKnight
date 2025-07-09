@@ -3,6 +3,7 @@ using Modding;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using UnityEngine;
 using static CutsceneHelper;
 using UObject = UnityEngine.Object;
@@ -32,6 +33,8 @@ namespace OWO_HollowKnight
             On.HeroController.DoDoubleJump += OnDoubleJump;
             On.HeroController.StartMPDrain += OnStartMPDrain;
             On.HeroController.StopMPDrain += OnStopMPDrain;
+            On.HeroController.StartCyclone += OnStartCyclone;
+            On.HeroController.EndCyclone += OnStopCyclone;
             On.HeroController.Update += OnHeroUpdate;
             On.GameManager.EquipCharm += OnEquipCharm;
             On.GameManager.PauseGameToggle += OnGamePause;
@@ -43,15 +46,52 @@ namespace OWO_HollowKnight
             ModHooks.AttackHook += OnAttack;      
         }
 
+        private void OnStopCyclone(On.HeroController.orig_EndCyclone orig, HeroController self)
+        {
+            Log("Stop Cyclone loop");
+            orig(self);
+        }
+
+        private void OnStartCyclone(On.HeroController.orig_StartCyclone orig, HeroController self)
+        {
+            Log("Start Cyclone loop");
+            orig(self);
+        }
+
         private void OnHealth(On.PlayerData.orig_AddHealth orig, PlayerData self, int amount)
         {
             owoSkin.Feel("Heal",1);
             orig(self, amount);
         }
 
+        bool superDashActive = false;
+        bool castActive = false;
+        bool nailActive = false;
         private void OnHeroUpdate(On.HeroController.orig_Update orig, HeroController self)
         {
             orig(self);
+            string statusLog;
+
+            if (superDashActive != self.cState.superDashing)
+            {
+                statusLog = self.cState.superDashing ? "Activado" : "Detenido";
+                superDashActive = self.cState.superDashing;
+                Log("El SuperDash está:" + statusLog);
+            }
+
+            if (castActive != self.cState.casting)
+            {
+                statusLog = self.cState.casting ? "Activado" : "Detenido";
+                castActive = self.cState.casting;
+                Log("El Cast está:" + statusLog);
+            }
+
+            if (nailActive != self.cState.nailCharging)
+            {
+                statusLog = self.cState.nailCharging ? "Activado" : "Detenido";
+                nailActive = self.cState.nailCharging;
+                Log("El nailCharging está:" + statusLog);
+            }
 
             if (self.cState.onGround) 
             {                
@@ -61,7 +101,7 @@ namespace OWO_HollowKnight
             if (!self.cState.wallSliding)
             {                
                 owoSkin.StopSliding();
-            }
+            }                     
         }
 
         private void OnStopMPDrain(On.HeroController.orig_StopMPDrain orig, HeroController self)
