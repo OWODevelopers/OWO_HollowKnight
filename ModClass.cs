@@ -50,13 +50,13 @@ namespace OWO_HollowKnight
 
         private void OnStopCyclone(On.HeroController.orig_EndCyclone orig, HeroController self)
         {
-            Log("Stop Cyclone loop");
+            owoSkin.StopCyclone();
             orig(self);
         }
 
         private void OnStartCyclone(On.HeroController.orig_StartCyclone orig, HeroController self)
         {
-            Log("Start Cyclone loop");
+            owoSkin.StartCyclone();
             orig(self);
         }
 

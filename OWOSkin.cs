@@ -18,6 +18,7 @@ namespace OWO_HollowKnight
         private bool fallingIsActive;
         private bool wallSlidingIsActive;
         private bool chargingIsActive;
+        private bool cycloneIsActive;
 
         public OWOSkin()
         {
@@ -241,6 +242,32 @@ namespace OWO_HollowKnight
 
         #endregion Charging
 
+        #region Cyclone
+
+        public void StartCyclone()
+        {
+            if (cycloneIsActive) return;
+
+            cycloneIsActive = true;
+            CycloneFuncAsync();
+        }
+
+        public void StopCyclone()
+        {
+            cycloneIsActive = false;
+        }
+
+        public async Task CycloneFuncAsync()
+        {
+            while (cycloneIsActive)
+            {
+                Feel("Cyclone", 0);
+                await Task.Delay(200);
+            }
+        }
+
+        #endregion Cyclone
+
         #endregion Loops
 
         public void StopAllHapticFeedback()
@@ -248,6 +275,7 @@ namespace OWO_HollowKnight
             StopFalling();
             StopSliding();
             StopCharging();
+            StopCyclone();
             OWO.Stop();
         }
 
