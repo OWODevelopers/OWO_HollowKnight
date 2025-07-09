@@ -48,12 +48,6 @@ namespace OWO_HollowKnight
             ModHooks.AttackHook += OnAttack;      
         }
 
-        private PlayerAction AAA(On.InputHandler.orig_GetActionForMappableControllerButton orig, InputHandler self, InputControlType button)
-        {
-            Log("¡Botón pulsado!");
-            return orig(self, button);
-        }
-
         private void OnStopCyclone(On.HeroController.orig_EndCyclone orig, HeroController self)
         {
             Log("Stop Cyclone loop");
