@@ -54,9 +54,6 @@ namespace OWO_HollowKnight
             orig(self, amount);
         }
 
-        bool superDashActive = false;
-        bool castActive = false;
-        bool nailActive = false;
         private void OnHeroUpdate(On.HeroController.orig_Update orig, HeroController self)
         {
             orig(self);
