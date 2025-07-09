@@ -19,6 +19,7 @@ namespace OWO_HollowKnight
         private bool wallSlidingIsActive;
         private bool chargingIsActive;
         private bool cycloneIsActive;
+        private bool superDashIsActive;
 
         public OWOSkin()
         {
@@ -268,6 +269,32 @@ namespace OWO_HollowKnight
 
         #endregion Cyclone
 
+        #region SuperDash
+
+        public void StartSuperDash()
+        {
+            if (superDashIsActive) return;
+
+            superDashIsActive = true;
+            SuperDashFuncAsync();
+        }
+
+        public void StopSuperDash()
+        {
+            superDashIsActive = false;
+        }
+
+        public async Task SuperDashFuncAsync()
+        {
+            while (superDashIsActive)
+            {
+                Feel("Super Dash", 0);
+                await Task.Delay(200);
+            }
+        }
+
+        #endregion SuperDash
+
         #endregion Loops
 
         public void StopAllHapticFeedback()
@@ -276,6 +303,7 @@ namespace OWO_HollowKnight
             StopSliding();
             StopCharging();
             StopCyclone();
+            StopSuperDash();
             OWO.Stop();
         }
 

@@ -48,18 +48,6 @@ namespace OWO_HollowKnight
             ModHooks.AttackHook += OnAttack;      
         }
 
-        private void OnStopCyclone(On.HeroController.orig_EndCyclone orig, HeroController self)
-        {
-            owoSkin.StopCyclone();
-            orig(self);
-        }
-
-        private void OnStartCyclone(On.HeroController.orig_StartCyclone orig, HeroController self)
-        {
-            owoSkin.StartCyclone();
-            orig(self);
-        }
-
         private void OnHealth(On.PlayerData.orig_AddHealth orig, PlayerData self, int amount)
         {
             owoSkin.Feel("Heal",1);
@@ -74,27 +62,6 @@ namespace OWO_HollowKnight
             orig(self);
             string statusLog;
 
-            if (superDashActive != self.cState.superDashing)
-            {
-                statusLog = self.cState.superDashing ? "Activado" : "Detenido";
-                superDashActive = self.cState.superDashing;
-                Log("El SuperDash está:" + statusLog);
-            }
-
-            if (castActive != self.cState.casting)
-            {
-                statusLog = self.cState.casting ? "Activado" : "Detenido";
-                castActive = self.cState.casting;
-                Log("El Cast está:" + statusLog);
-            }
-
-            if (nailActive != self.cState.nailCharging)
-            {
-                statusLog = self.cState.nailCharging ? "Activado" : "Detenido";
-                nailActive = self.cState.nailCharging;
-                Log("El nailCharging está:" + statusLog);
-            }
-
             if (self.cState.onGround) 
             {                
                owoSkin.StopFalling();
@@ -103,19 +70,16 @@ namespace OWO_HollowKnight
             if (!self.cState.wallSliding)
             {                
                 owoSkin.StopSliding();
-            }                     
-        }
+            }
 
-        private void OnStopMPDrain(On.HeroController.orig_StopMPDrain orig, HeroController self)
-        {
-            owoSkin.StopCharging();
-            orig(self);
-        }
-
-        private void OnStartMPDrain(On.HeroController.orig_StartMPDrain orig, HeroController self, float time)
-        {
-            owoSkin.StartCharging();
-            orig(self, time);
+            if (self.cState.superDashing)
+            {
+                owoSkin.StartSuperDash();
+            }
+            else 
+            {
+                owoSkin.StopSuperDash();
+            }
         }
 
         private void OnEnterHero(On.GameManager.orig_FadeSceneIn orig, GameManager self)
@@ -177,7 +141,6 @@ namespace OWO_HollowKnight
         private void WallJump()
         {
             owoSkin.Feel("Jump", 2);
-            //Stop Loop
         }
 
         private IEnumerator OnPlayerDeath(On.GameManager.orig_PlayerDead orig, GameManager self, float waitTime)
@@ -194,6 +157,30 @@ namespace OWO_HollowKnight
             owoSkin.Feel("Hazard Death", 4);
 
             yield return orig(self, waitTime);
+        }
+
+        private void OnStopCyclone(On.HeroController.orig_EndCyclone orig, HeroController self)
+        {
+            owoSkin.StopCyclone();
+            orig(self);
+        }
+
+        private void OnStartCyclone(On.HeroController.orig_StartCyclone orig, HeroController self)
+        {
+            owoSkin.StartCyclone();
+            orig(self);
+        }
+
+        private void OnStopMPDrain(On.HeroController.orig_StopMPDrain orig, HeroController self)
+        {
+            owoSkin.StopCharging();
+            orig(self);
+        }
+
+        private void OnStartMPDrain(On.HeroController.orig_StartMPDrain orig, HeroController self, float time)
+        {
+            owoSkin.StartCharging();
+            orig(self, time);
         }
 
         #endregion
