@@ -245,6 +245,9 @@ namespace OWO_HollowKnight
 
         public void StopAllHapticFeedback()
         {
+            StopFalling();
+            StopSliding();
+            StopCharging();
             OWO.Stop();
         }
 
