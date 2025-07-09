@@ -72,7 +72,7 @@ namespace OWO_HollowKnight
             {
                 suitEnabled = true;
                 LOG("OWO suit connected.");
-                Feel("Loading Up", 1);
+                Feel("Charm Equip", 1);
             }
             if (!suitEnabled)
                 LOG("OWO is not enabled?!?!");

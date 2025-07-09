@@ -1,8 +1,10 @@
 ﻿using GlobalEnums;
+using InControl;
 using Modding;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing.Printing;
 using System.Linq.Expressions;
 using UnityEngine;
 using static CutsceneHelper;
@@ -42,8 +44,14 @@ namespace OWO_HollowKnight
             On.GameManager.PlayerDead += OnPlayerDeath;
             On.GameManager.PlayerDeadFromHazard += OnPlayerDeathFromHazard;
             On.GameManager.FadeSceneIn += OnEnterHero; //FinishedEnteringScene por si este no sirve
-            On.PlayerData.AddHealth += OnHealth;
+            On.PlayerData.AddHealth += OnHealth;            
             ModHooks.AttackHook += OnAttack;      
+        }
+
+        private PlayerAction AAA(On.InputHandler.orig_GetActionForMappableControllerButton orig, InputHandler self, InputControlType button)
+        {
+            Log("¡Botón pulsado!");
+            return orig(self, button);
         }
 
         private void OnStopCyclone(On.HeroController.orig_EndCyclone orig, HeroController self)
