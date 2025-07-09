@@ -17,6 +17,7 @@ namespace OWO_HollowKnight
         public Dictionary<String, Sensation> FeedbackMap = new Dictionary<String, Sensation>();
         private bool fallingIsActive;
         private bool wallSlidingIsActive;
+        private bool chargingIsActive;
 
         public OWOSkin()
         {
@@ -213,6 +214,32 @@ namespace OWO_HollowKnight
         }
 
         #endregion Falling
+
+        #region Charging
+
+        public void StartCharging()
+        {
+            if (chargingIsActive) return;
+
+            chargingIsActive = true;
+            ChargingFuncAsync();
+        }
+
+        public void StopCharging()
+        {
+            chargingIsActive = false;
+        }
+
+        public async Task ChargingFuncAsync()
+        {
+            while (chargingIsActive)
+            {
+                Feel("Charging", 0);
+                await Task.Delay(200);
+            }
+        }
+
+        #endregion Charging
 
         #endregion Loops
 

@@ -45,7 +45,7 @@ namespace OWO_HollowKnight
 
         private void OnHealth(On.PlayerData.orig_AddHealth orig, PlayerData self, int amount)
         {
-            Log("Heal sensation!");
+            owoSkin.Feel("Heal",1);
             orig(self, amount);
         }
 
@@ -66,13 +66,13 @@ namespace OWO_HollowKnight
 
         private void OnStopMPDrain(On.HeroController.orig_StopMPDrain orig, HeroController self)
         {
-            Log("Stop MP Drain");
+            owoSkin.StopCharging();
             orig(self);
         }
 
         private void OnStartMPDrain(On.HeroController.orig_StartMPDrain orig, HeroController self, float time)
         {
-            Log("Start MP Drain");
+            owoSkin.StartCharging();
             orig(self, time);
         }
 
