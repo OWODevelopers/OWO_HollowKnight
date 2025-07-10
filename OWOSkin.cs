@@ -263,7 +263,7 @@ namespace OWO_HollowKnight
             while (cycloneIsActive)
             {
                 Feel("Cyclone", 0);
-                await Task.Delay(200);
+                await Task.Delay(300);
             }
         }
 
