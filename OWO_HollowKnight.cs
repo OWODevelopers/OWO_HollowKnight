@@ -1,14 +1,8 @@
 ﻿using GlobalEnums;
-using InControl;
 using Modding;
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Drawing.Printing;
-using System.Linq.Expressions;
 using UnityEngine;
-using static CutsceneHelper;
-using UObject = UnityEngine.Object;
 
 namespace OWO_HollowKnight
 {
@@ -43,7 +37,7 @@ namespace OWO_HollowKnight
             On.GameManager.OnApplicationQuit += OnApplicationQuit;
             On.GameManager.PlayerDead += OnPlayerDeath;
             On.GameManager.PlayerDeadFromHazard += OnPlayerDeathFromHazard;
-            On.GameManager.FadeSceneIn += OnEnterHero; //FinishedEnteringScene por si este no sirve
+            On.GameManager.FadeSceneIn += OnEnterHero;
             On.PlayerData.AddHealth += OnHealth;            
             ModHooks.AttackHook += OnAttack;      
         }
@@ -81,7 +75,6 @@ namespace OWO_HollowKnight
 
         private void OnEnterHero(On.GameManager.orig_FadeSceneIn orig, GameManager self)
         {
-            Log("OnEnterHero");
             owoSkin.StopAllHapticFeedback();
             orig(self);
         }
@@ -89,7 +82,6 @@ namespace OWO_HollowKnight
         #region Hero
         private void OnAttack(AttackDirection direction)
         {
-            Log($"Attack {direction.ToString()}");
             owoSkin.Feel("Attack", 2);
         }
 
@@ -187,7 +179,6 @@ namespace OWO_HollowKnight
         private IEnumerator OnGamePause(On.GameManager.orig_PauseGameToggle orig, GameManager self)
         {
             owoSkin.isGameUnpaused = !owoSkin.isGameUnpaused;
-            Log("GameIsPaused: " + !owoSkin.isGameUnpaused);
 
             yield return orig(self);
         }
@@ -195,7 +186,7 @@ namespace OWO_HollowKnight
         private void OnEquipCharm(On.GameManager.orig_EquipCharm orig, GameManager self, int charmNum)
         {
             orig(self, charmNum);
-            owoSkin.Feel("Charm Equip");
+            owoSkin.Feel("Charm Equip", 1);
         }
 
         private void OnApplicationQuit(On.GameManager.orig_OnApplicationQuit orig, GameManager self)
