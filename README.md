@@ -18,10 +18,10 @@ Want to get an OWO Suit? [Look here](https://owogame.com/shop/).
 # Featured effect
 - Actions and movements like jumping, dashing, focus...
 - Attacks 🐝
-- Impacts
-- Wall Slide
-- Falling
-- Healing
+- Impacts 💥
+- Wall Slide 🧱
+- Falling 🍃
+- Healing 💊
 - Death ☠️
  
 # Manual Connection
